@@ -1,4 +1,4 @@
-import {Color} from "./color.enum.ts";
+import { Color } from "./color.enum.ts";
 
 const players = [Color.BLACK, Color.WHITE];
 

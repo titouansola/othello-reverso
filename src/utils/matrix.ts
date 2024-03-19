@@ -1,16 +1,20 @@
-import {Color} from "./color.enum.ts";
-import {getAlternatePlayer} from "./player.ts";
-import _ from 'lodash';
+import { Color } from "./color.enum.ts";
+import { getAlternatePlayer } from "./player.ts";
+import _ from "lodash";
 
 type Matrix = (Color | null)[][];
 type Coords = [number, number];
-type Trigger = { start: Coords, end: Coords } | null;
+type Trigger = { start: Coords; end: Coords } | null;
 
 export class MatrixService {
   private readonly matrix: Matrix;
   private readonly alternate: Color;
 
-  constructor(_matrix: Matrix, private readonly played: Coords, private readonly player: Color) {
+  constructor(
+    _matrix: Matrix,
+    private readonly played: Coords,
+    private readonly player: Color,
+  ) {
     this.matrix = _.cloneDeep(_matrix);
     this.alternate = getAlternatePlayer(this.player);
   }
@@ -113,7 +117,7 @@ export class MatrixService {
     const start = Math.min(x, u);
     const end = Math.max(x, u);
     //
-    for(let i = start; i <= end; i ++) {
+    for (let i = start; i <= end; i++) {
       if (this.matrix[y][i] === this.alternate) {
         this.matrix[y][i] = this.player;
       }
@@ -129,7 +133,7 @@ export class MatrixService {
     const start = Math.min(y, v);
     const end = Math.max(y, v);
     //
-    for(let i = start; i <= end; i ++) {
+    for (let i = start; i <= end; i++) {
       if (this.matrix[i][x] === this.alternate) {
         this.matrix[i][x] = this.player;
       }
@@ -303,7 +307,10 @@ export class MatrixService {
         if (diagRightdown === this.alternate) {
           diagRightdownEnd = true;
         }
-        if ([null, Color.PLAYABLE].includes(diagRightdown) && diagRightdownFlag) {
+        if (
+          [null, Color.PLAYABLE].includes(diagRightdown) &&
+          diagRightdownFlag
+        ) {
           diagRightdownEnd = true;
           this.matrix[y1][x1] = Color.PLAYABLE;
         }
